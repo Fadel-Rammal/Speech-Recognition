@@ -1,0 +1,38 @@
+
+body{
+
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f2f2f2;
+
+}
+
+
+
+.start, .stop{
+
+    padding: 10px 10px;
+    background-color: #7eccff;
+    
+    border: none;
+    border-radius: 20px;
+    color:rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.start:hover, .stop:hover{
+
+    background-color: #44b2fc;
+    border-radius: 20px;
+   
+}
+
+
+
+
+
+

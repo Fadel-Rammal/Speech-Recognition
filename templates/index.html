@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Recognition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+
+</head>
+<body>
+
+    <h1>Speech Recognition App</h1>
+
+
+    <button id="startBtn" class="start">Start Listening</button>
+    <button id="stopBtn" class="stop">Stop Listening</button>
+
+
+
+
+    <p><strong>Status:</strong> <span id="status">Not Listening</span></p>
+    
+    <p><strong>Accuracy:</strong> <span id="accuracy"></span></p>
+    <p><strong>Pronunciation:</strong> <span id="pronunciation"></span></p>
+    <p><strong>You said:</strong> <span id="result"></span></p>
+
+
+
+    <script>
+
+const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            document.getElementById('status').textContent = " Preparing to listen...";
+            socket.emit('start_listening');
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            socket.emit('stop_listening');
+        });
+
+        socket.on('listening', (data) => {
+            document.getElementById('status').textContent =  data.status;
+        });
+
+        socket.on('speech_recognized', (data) => {
+            document.getElementById('result').textContent =  data.text;
+            document.getElementById('accuracy').textContent =  data.accuracy + "%";
+            document.getElementById('pronunciation').textContent =  data.pronunciation + "%";
+        });
+
+    </script>
+
+
+
+</body>
+</html>
